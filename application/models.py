@@ -3,7 +3,7 @@ from flask_login import UserMixin
 
 class Users(UserMixin, db.Model):
     __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True, auto_increment=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64))
     mobile_number = db.Column(db.Integer)
     role = db.Column(db.String(10))
@@ -15,7 +15,7 @@ class Users(UserMixin, db.Model):
 
 class party(db.Model):
     __tablename__ = "party"
-    id = db.Column(db.Integer, primary_key=True, auto_increment=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     business_name = db.Column(db.String(64))
     owner_name = db.Column(db.String(64))
     mobile_number = db.Column(db.Integer)
@@ -26,7 +26,7 @@ class party(db.Model):
 
 class consignee(db.Model):
     __tablename__ = "consignee"
-    id = db.Column(db.Integer, primary_key=True, auto_increment=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     business_name = db.Column(db.String(64), index=True, unique=True, nullable=False)
     owner_name = db.Column(db.String(64))
     mobile_number = db.Column(db.Integer, nullable=False)
@@ -47,16 +47,17 @@ class consignee(db.Model):
                 11) Payment Method type=option
                 12) Consignment Charges type=number
             -->'''
-class orders():
-    __tablename__ = "orders"
-    order_id = db.Column(db.Integer, primary_key=True, auto_increment=True)
-    order_date = db.Column(db.DateTime)
+class Orders(db.Model):
+    __tablename__ = "Orders"
+    order_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    order_date = db.Column(db.Date)
+    order_time = db.Column(db.Time)
     from_branch = db.Column(db.String())
     to_branch = db.Column(db.String())
     party_id = db.Column(db.Integer, db.ForeignKey("party.id"))
     cosignee_name = db.Column(db.String())
     consinee_address = db.Column(db.String())
-    inovice_number = db.Column(db.Integer)
+    inovice_number = db.Column(db.String())
     description_of_goods = db.Column(db.String())
     number_of_packges = db.Column(db.Integer)
     consignment_value = db.Column(db.Float)
@@ -64,5 +65,5 @@ class orders():
     pod_charges = db.Column(db.Integer)
     payment_mode = db.Column(db.String())
     total_amount = db.Column(db.Float)
-    entry_by = db.Column(db.Integer, db.ForeignKey("users.id"))
+    entry_by = db.Column(db.Integer)
 

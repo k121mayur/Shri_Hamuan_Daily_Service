@@ -10,7 +10,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 import os
 from email_validator import validate_email
-from application.models import party, consignee, orders
+from application.models import party, consignee, Orders
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -62,13 +62,14 @@ def order_entry():
     if request.method == "GET":
         return render_template("order_entry.html", status = None)
     elif request.method == "POST":
-        order_date = dt.now()
+        order_date = dt.now().date()
+        order_time = dt.now().time()
         from_branch = request.form.get("from_branch")
         to_branch = request.form.get("to_branch")
-        party_id = db.Column(db.Integer, db.ForeignKey("party.id"))
-        cosignee_name = request.form.get("cosignee_name")
-        consinee_address = request.form.get("consinee_address")
-        inovice_number = request.form.get("inovice_number")
+        party_id = 0
+        cosignee_name = request.form.get("consignee_name")
+        consinee_address = request.form.get("consignee_address")
+        inovice_number = request.form.get("invoice_number")
         description_of_goods = request.form.get("description_of_goods")
         number_of_packges = request.form.get("number_of_packges")
         consignment_value = request.form.get("consignment_value")
@@ -76,24 +77,24 @@ def order_entry():
         pod_charges = request.form.get("pod_charges")
         payment_mode = request.form.get("payment_method")
         total_amount = request.form.get("consignment_charges")
-        entry_by = current_user.id
         
-        order = orders(
+        order = Orders(
             order_date = order_date,
+            order_time = order_time,
             from_branch = from_branch,
             to_branch = to_branch,
-            party_id = party_id,
+            party_id = int(party_id),
             cosignee_name = cosignee_name,
             consinee_address = consinee_address,
             inovice_number = inovice_number,
             description_of_goods = description_of_goods,
             number_of_packges = number_of_packges,
-            consignment_value = consignment_value,
-            consignment_weight = consignment_weight,
-            pod_charges = pod_charges,
+            consignment_value = int(consignment_value),
+            consignment_weight = int(consignment_weight),
+            pod_charges = int(pod_charges),
             payment_mode = payment_mode,
-            total_amount = total_amount,
-            entry_by = entry_by
+            total_amount = int(total_amount),
+            entry_by = int(current_user.id)
 
         )
         db.session.add(order)
