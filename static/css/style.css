@@ -1,0 +1,101 @@
+/* CSS Styling */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 60%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+  }
+  
+  h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  form {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    align-items: center;
+  }
+  
+  form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  form input[type="text"],
+  form input[type="password"],
+  form select {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 20px;
+  }
+  
+  form input[type="submit"] {
+    background-color: #02a810;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    
+  }
+  
+  form input[type="submit"]:hover {
+    background-color: #4d4fff;
+  }
+  
+  form label:last-child {
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+  }
+  
+  img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  .error {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #ff0000;
+}
+
+.error strong {
+    font-weight: bold;
+}
+  /* Responsive Styling */
+  
+  @media only screen and (max-width: 600px) {
+    .container {
+      max-width: 400px;
+      padding: 10px;
+    }
+  }
+  
+  @media only screen and (max-width: 400px) {
+    form input[type="text"],
+    form input[type="password"],
+    form select {
+      margin-bottom: 10px;
+    }
+  }
+  
