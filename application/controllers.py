@@ -1,4 +1,4 @@
-from flask import request, url_for, redirect, session
+from flask import request, url_for, redirect, session, jsonify
 from flask_session import Session
 from flask_login import login_user, logout_user, current_user, login_required
 from flask import render_template
@@ -11,6 +11,7 @@ from datetime import timedelta
 import os
 from email_validator import validate_email
 from application.models import party, consignee, Orders
+
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -100,6 +101,16 @@ def order_entry():
         db.session.add(order)
         db.session.commit()        
         return render_template("order_entry.html", status = "Order added successfully")
+
+
+@app.route("/search_consigner", methods=["GET", "POST"])
+@login_required
+def search_consigner():
+    search_term = request.get_json()
+    consignors = party.query.filter(party.business_name.like(f"%{search_term['names']}%")).all()
+    print(consignors)
+    matching_names = [consignor.business_name for consignor in consignors]
+    return jsonify(matching_names)
 
 @app.route("/add_user", methods=["GET", "POST"])
 @login_required
