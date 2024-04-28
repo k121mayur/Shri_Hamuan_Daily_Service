@@ -11,12 +11,20 @@ from datetime import timedelta
 import os
 from email_validator import validate_email
 from application.models import party, consignee, Orders
+from flask_healthcheck import HealthCheck # For GCloud Deployment
 
-
+health = HealthCheck()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+@app.route('/health')
+@health.fisk_check()
+def health_check():
+  # Add logic to check your app's health (database connection, etc.)
+  # If healthy, return a successful response (e.g., HTTP 200)
+  # If unhealthy, return an error response (e.g., HTTP 500)
+  return jsonify({'status': 'healthy'})
 
 @app.route("/")
 def index():
